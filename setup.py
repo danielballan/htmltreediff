@@ -24,7 +24,7 @@ setup(
     packages=find_packages(),
     scripts=[],
     zip_safe=False,
-    install_requires=['lxml', 'html5lib'],
+    install_requires=['lxml', 'html5lib', 'six'],
     cmdclass={},
     classifiers=[
         "Development Status :: 3 - Alpha",

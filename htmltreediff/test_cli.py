@@ -1,6 +1,6 @@
 import sys
 import tempfile
-from StringIO import StringIO
+from six import StringIO
 from textwrap import dedent
 
 from nose.tools import assert_equal
@@ -10,11 +10,11 @@ from htmltreediff.cli import main
 def test_main():
     # Run the command line interface main function.
     f1 = tempfile.NamedTemporaryFile()
-    f1.write(u'<h1>one</h1>')
-    f1.seek(0)
+    with open(f1.name, 'w') as f:
+        f.write(u'<h1>one</h1>')
     f2 = tempfile.NamedTemporaryFile()
-    f2.write(u'<h1>one</h1><h2>two</h2>')
-    f2.seek(0)
+    with open(f2.name, 'w') as f:
+        f.write(u'<h1>one</h1><h2>two</h2>')
 
     old_stdout = sys.stdout
     try:

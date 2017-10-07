@@ -1,5 +1,6 @@
 import re, string
 from difflib import SequenceMatcher, _calculate_ratio
+import six
 
 def full_split(text, regex):
     """
@@ -43,7 +44,7 @@ def multi_split(text, regexes):
     'one234five| |678'
     """
     def make_regex(s):
-        return re.compile(s) if isinstance(s, basestring) else s
+        return re.compile(s) if isinstance(s, six.string_types) else s
     regexes = [make_regex(r) for r in regexes]
 
     # Run the list of pieces through the regex split, splitting it into more

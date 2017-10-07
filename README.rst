@@ -43,7 +43,7 @@ You can also use htmltreediff from within a python program as a library.
 For HTML Changes::
 
     >>> from htmltreediff import diff
-    >>> print diff('<h1>...one...</h1>', '<h1>...two...</h1>', pretty=True)
+    >>> print(diff('<h1>...one...</h1>', '<h1>...two...</h1>', pretty=True))
     <h1>
       ...
       <del>
@@ -57,11 +57,11 @@ For HTML Changes::
 
 And also for text-only changes::
 
-    >>> print diff(
+    >>> print(diff(
     ...     'The quick brown fox jumps over the lazy dog.',
     ...     'The very quick brown foxes jump over the dog.',
     ...     plaintext=False,
-    ... )
+    ... ))
     The <ins>very </ins>quick brown <del>fox jumps</del><ins>foxes jump</ins> over the<del> lazy</del> dog.
 
 
