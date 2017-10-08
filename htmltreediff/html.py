@@ -9,7 +9,8 @@ from htmltreediff.util import (
 )
 from htmltreediff.changes import dom_diff, distribute
 
-def diff(old_html, new_html, cutoff=0.0, plaintext=False, pretty=False):
+def diff(old_html, new_html, cutoff=0.0, plaintext=False, pretty=False,
+         ins_tag='ins', del_tag='del'):
     """Show the differences between the old and new html document, as html.
 
     Return the document html with extra tags added to show changes. Add <ins>
@@ -27,7 +28,7 @@ def diff(old_html, new_html, cutoff=0.0, plaintext=False, pretty=False):
     if not check_text_similarity(old_dom, new_dom, cutoff):
         return '<h2>The differences from the previous version are too large to show concisely.</h2>'
 
-    dom = dom_diff(old_dom, new_dom)
+    dom = dom_diff(old_dom, new_dom, ins_tag, del_tag)
 
     # HTML-specific cleanup.
     if not plaintext:

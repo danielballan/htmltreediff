@@ -30,7 +30,7 @@ def split_node(node):
         parent.insertBefore(piece_node, node)
     remove_node(node)
 
-def dom_diff(old_dom, new_dom):
+def dom_diff(old_dom, new_dom, ins_tag, del_tag):
     # Split all the text nodes in the old and new dom.
     split_text_nodes(old_dom)
     split_text_nodes(new_dom)
@@ -42,10 +42,12 @@ def dom_diff(old_dom, new_dom):
     #     show changes.
     runner = EditScriptRunner(old_dom, edit_script)
     dom = runner.run_edit_script()
-    add_changes_markup(dom, runner.ins_nodes, runner.del_nodes)
+    add_changes_markup(dom, runner.ins_nodes, runner.del_nodes,
+                       ins_tag, del_tag)
     return dom
 
-def add_changes_markup(dom, ins_nodes, del_nodes):
+def add_changes_markup(dom, ins_nodes, del_nodes,
+                       ins_tag='ins', del_tag='del'):
     """
     Add <ins> and <del> tags to the dom to show changes.
     """
@@ -54,15 +56,15 @@ def add_changes_markup(dom, ins_nodes, del_nodes):
         # diff algorithm deletes nodes in reverse order, so un-reverse the
         # order for this iteration
         insert_or_append(node.orig_parent, node, node.orig_next_sibling)
-        wrap(node, 'del')
+        wrap(node, del_tag)
     for node in ins_nodes:
-        wrap(node, 'ins')
+        wrap(node, ins_tag)
     # Perform post-processing and cleanup.
-    remove_nesting(dom, 'del')
-    remove_nesting(dom, 'ins')
-    sort_del_before_ins(dom)
-    merge_adjacent(dom, 'del')
-    merge_adjacent(dom, 'ins')
+    remove_nesting(dom, del_tag)
+    remove_nesting(dom, ins_tag)
+    sort_del_before_ins(dom, ins_tag, del_tag)
+    merge_adjacent(dom, del_tag)
+    merge_adjacent(dom, ins_tag)
 
 def remove_nesting(dom, tag_name):
     """
@@ -89,12 +91,12 @@ def sort_nodes(dom, cmp_func):
             node.parentNode.insertBefore(node, prev_sib)
             prev_sib = node.previousSibling
 
-def sort_del_before_ins(dom):
+def sort_del_before_ins(dom, ins_tag='ins', del_tag='del'):
     def node_cmp(a, b):
         try:
-            if a.tagName == 'del' and b.tagName == 'ins':
+            if a.tagName == del_tag and b.tagName == ins_tag:
                 return -1 #TODO: line not covered
-            if a.tagName == 'ins' and b.tagName == 'del':
+            if a.tagName == ins_tag and b.tagName == del_tag:
                 return 1
         except AttributeError:
             pass
