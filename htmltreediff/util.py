@@ -60,15 +60,15 @@ def parse_minidom(xml, clean=True, strict_xml=False):
     dom.normalize()
 
     # Make sure that the body element is the top of the dom.
-    for head_element in dom.getElementsByTagName('head'):
-        remove_node(head_element)
-    for html_element in dom.getElementsByTagName('html'):
-        unwrap(html_element)
-    if not dom.documentElement:
-        dom = parse_lxml_dom('', strict_xml=True)
+    # for head_element in dom.getElementsByTagName('head'):
+    #     remove_node(head_element)
+    # for html_element in dom.getElementsByTagName('html'):
+    #     unwrap(html_element)
+    # if not dom.documentElement:
+    #     dom = parse_lxml_dom('', strict_xml=True)
 
-    if not strict_xml:
-        assert dom.documentElement.tagName == 'body'
+    # if not strict_xml:
+    #     assert dom.documentElement.tagName == 'body'
 
     return dom
 

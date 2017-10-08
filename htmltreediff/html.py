@@ -36,9 +36,9 @@ def diff(old_html, new_html, cutoff=0.0, plaintext=False, pretty=False,
         fix_tables(dom)
 
     # Only return html for the document body contents.
-    body_elements = dom.getElementsByTagName('body')
-    if len(body_elements) == 1:
-        dom = body_elements[0]
+    # body_elements = dom.getElementsByTagName('body')
+    # if len(body_elements) == 1:
+    #     dom = body_elements[0]
 
     return minidom_tostring(dom, pretty=pretty)
 
