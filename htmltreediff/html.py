@@ -20,15 +20,19 @@ def diff(old_html, new_html, cutoff=0.0, plaintext=False, pretty=False,
     if plaintext:
         old_dom = parse_text(old_html)
         new_dom = parse_text(new_html)
+        old_dom_ = parse_text(old_html)
+        new_dom_ = parse_text(new_html)
     else:
         old_dom = parse_minidom(old_html)
         new_dom = parse_minidom(new_html)
+        old_dom_ = parse_minidom(old_html)
+        new_dom_ = parse_minidom(new_html)
 
     # If the two documents are not similar enough, don't show the changes.
-    if not check_text_similarity(old_dom, new_dom, cutoff):
-        return '<h2>The differences from the previous version are too large to show concisely.</h2>'
+    # if not check_text_similarity(old_dom, new_dom, cutoff):
+    #     return '<h2>The differences from the previous version are too large to show concisely.</h2>'
 
-    dom = dom_diff(old_dom, new_dom, ins_tag, del_tag)
+    dom = dom_diff(old_dom, new_dom, old_dom_, new_dom_, ins_tag, del_tag)
 
     # HTML-specific cleanup.
     if not plaintext:

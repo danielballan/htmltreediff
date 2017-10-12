@@ -326,6 +326,10 @@ def tree_text(node):
 
 # manipulation #
 def copy_dom(dom):
+    # new_dom = minidom.Document()
+    # doc = new_dom.importNode(dom.documentElement, deep=True)
+    # new_dom.documentElement = doc
+    # return new_dom
     return copy.deepcopy(dom)
 
 def remove_node(node):

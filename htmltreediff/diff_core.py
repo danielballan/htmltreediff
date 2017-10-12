@@ -26,11 +26,16 @@ def fuzzy_match_node_hash(node):
         return node.nodeValue
     return FuzzyHashableTree(node)
 
+import sys
+sys.setrecursionlimit(1000)
+
 class Differ():
     def __init__(self, old_dom, new_dom):
         self.edit_script = []
-        self.old_dom = copy_dom(old_dom)
-        self.new_dom = copy_dom(new_dom)
+        self.old_dom = old_dom
+        self.new_dom = new_dom
+        # self.old_dom = copy_dom(old_dom)
+        # self.new_dom = copy_dom(new_dom)
 
     def get_edit_script(self):
         """

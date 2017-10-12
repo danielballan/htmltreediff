@@ -30,13 +30,15 @@ def split_node(node):
         parent.insertBefore(piece_node, node)
     remove_node(node)
 
-def dom_diff(old_dom, new_dom, ins_tag, del_tag):
+def dom_diff(old_dom, new_dom, old_dom_, new_dom_, ins_tag, del_tag):
     # Split all the text nodes in the old and new dom.
+    split_text_nodes(old_dom_)
+    split_text_nodes(new_dom_)
     split_text_nodes(old_dom)
     split_text_nodes(new_dom)
 
     # Get the edit script from the diff algorithm
-    differ = Differ(old_dom, new_dom)
+    differ = Differ(old_dom_, new_dom_)
     edit_script = differ.get_edit_script()
     # Run the edit script, then use the inserted and deleted nodes metadata to
     #     show changes.
